@@ -4,6 +4,7 @@
 
 Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv), _cpacmanSpeed(1.00f)
 {
+	_pacmanDirection = 0;
 
 	_frameCount = 0;
 	_paused = false;
@@ -62,6 +63,9 @@ void Pacman::LoadContent()
 
 void Pacman::Update(int elapsedTime)
 {
+
+	_pacmanSourceRect->Y = _pacmanSourceRect->Height * _pacmanDirection;
+
 	// Gets the current state of the keyboard
 	Input::KeyboardState* keyboardState = Input::Keyboard::GetState();
 
@@ -87,17 +91,26 @@ void Pacman::Update(int elapsedTime)
 
 	// Checks if D key is pressed
 	if (keyboardState->IsKeyDown(Input::Keys::D))
+	{
 		_pacmanPosition->X += _cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
+		_pacmanDirection = 0;
+	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::A))
+	{
 		_pacmanPosition->X += -_cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
-
+		_pacmanDirection = 2;
+	}
 	if (keyboardState->IsKeyDown(Input::Keys::W))
+	{
 		_pacmanPosition->Y += -_cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
-
+		_pacmanDirection = 3;
+	}
 	if (keyboardState->IsKeyDown(Input::Keys::S))
+	{
 		_pacmanPosition->Y += _cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
-
+		_pacmanDirection = 1;
+	}
 
 	if (_pacmanPosition->X + _pacmanSourceRect->Width > Graphics::GetViewportWidth()) 
 	{
