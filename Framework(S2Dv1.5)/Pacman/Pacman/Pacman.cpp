@@ -4,6 +4,7 @@
 
 Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv), _cpacmanSpeed(1.00f)
 {
+	_Pacman = new player();
 
 	_frameCount = 0;
 	_paused = false;
