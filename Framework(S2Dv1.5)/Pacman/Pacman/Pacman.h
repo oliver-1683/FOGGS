@@ -7,6 +7,8 @@
 		#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
 	#endif
 #endif
+#define MUNCHIECOUNT 50
+
 
 // Just need to include main header file
 #include "S2D/S2D.h"
@@ -23,8 +25,30 @@ struct player
 	Rect* sourcerect;
 	Texture2D* texture;
 	Vector2* position;
+	const float _cpacmanSpeed;
+	player() : _cpacmanSpeed(1.00f)
+	{};
 };
 
+struct munchie
+{
+	Vector2* position;
+	int currentframetime;
+	int _frameCount;
+	Rect* _munchieRect;
+	Texture2D* _munchieBlueTexture;
+	Texture2D* _munchieInvertedTexture;
+	Texture2D* collectabletex;
+};
+
+struct menu
+{
+	Texture2D* _menuBackround;
+	Rect* _menuRectangle;
+	Vector2* _menuStringPosition;
+	bool _paused;
+
+};
 // Declares the Pacman class which inherits from the Game class.
 // This allows us to overload the Game class methods to help us
 // load content, draw and update our game.
@@ -35,23 +59,14 @@ private:
 	player* _Pacman;
 
 	// Data to represent Munchie
-	int _frameCount;
-	Rect* _munchieRect;
-	Texture2D* _munchieBlueTexture;
-	Texture2D* _munchieInvertedTexture;
-
+	munchie* collectable[MUNCHIECOUNT];
 	// Position for String
 	Vector2* _stringPosition;
 
-	//constent data for game veriable
-	const float _cpacmanSpeed;
+	
 
 	//data for menu
-
-	Texture2D* _menuBackround;
-	Rect* _menuRectangle;
-	Vector2* _menuStringPosition;
-	bool _paused;
+	menu* start_menu;
 
 public:
 	/// <summary> Constructs the Pacman class. </summary>
