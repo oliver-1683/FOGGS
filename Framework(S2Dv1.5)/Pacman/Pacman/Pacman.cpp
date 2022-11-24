@@ -2,7 +2,7 @@
 
 #include <sstream>
 
-Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
+Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv) 
 {
 	_Pacman = new player();
 	for (int i = 0; i < MUNCHIECOUNT; i++)
@@ -14,6 +14,11 @@ Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
 	//local veriable
 	start_menu = new menu();
 	start_menu->_paused = false;
+	
+	_Pacman->currentframetime = 0;
+	_Pacman->frame = 0;
+
+
 
 	//initonalise inportant game aspects
 	Graphics::Initialise(argc, argv, this, 1024, 768, false, 25, 25, "pacman", 60);
@@ -27,22 +32,14 @@ Pacman::~Pacman()
 {
 	delete _Pacman->texture;
 	delete _Pacman->sourcerect;
-	for (int i = 0; i < MUNCHIECOUNT; i++)
-	{
-		delete collectables[i]->_munchieBlueTexture;
-		delete collectables[i]->_munchieInvertedTexture;
-		delete collectables[i]->_munchieRect;
-	}
 
 	int ncount = 0;
-	for (ncount = 0; ncount < MUNCHIECOUNT; ncount++) 
+	/*for (ncount = 0; ncount < MUNCHIECOUNT; ncount++)
 	{
-	    delete collectables[0]->collectabletex;
 		delete collectables[ncount]->position;
 		delete collectables[ncount]->_munchieRect;
 		delete collectables[ncount];
-	}
-	delete collectables;
+	}*/
 }
 
 
@@ -54,10 +51,9 @@ void Pacman::LoadContent()
 	_Pacman->position = new Vector2(350.0f, 350.0f);
 	_Pacman->sourcerect = new Rect(0.0f, 0.0f, 32, 32);
 
-	int i;
-	for (i = 0; i < MUNCHIECOUNT; i++)
+	
+	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
-		//collectables[i] = new collectable();
 		collectables[i]->currentframetime = 0;
 		collectables[i]->position = new Vector2((rand() % Graphics::GetViewportWidth()), (rand() % Graphics::GetViewportHeight()));
 	}
@@ -65,7 +61,7 @@ void Pacman::LoadContent()
 	Texture2D* collectabletex = new Texture2D();
 	collectabletex->Load("Textures/Munchie.png", false);
 
-	for (i = 0; i < MUNCHIECOUNT; i++)
+	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
 		collectables[i]->_munchieBlueTexture = collectabletex;
 		collectables[i]->_munchieBlueTexture = new Texture2D();
@@ -79,11 +75,11 @@ void Pacman::LoadContent()
 
 
 	// Load Munchie
-	/*collectables[i]->_munchieBlueTexture = new Texture2D();
-	collectables[i]->_munchieBlueTexture->Load("Textures/Munchie.tga", true);
-	collectables[i]->_munchieInvertedTexture = new Texture2D();
-	collectables[i]->_munchieInvertedTexture->Load("Textures/MunchieInverted.tga", true);
-	collectables[i]->_munchieRect = new Rect(100.0f, 450.0f, 12, 12);*/
+	/*collectables[MUNCHIECOUNT]->_munchieBlueTexture = new Texture2D();
+	collectables[MUNCHIECOUNT]->_munchieBlueTexture->Load("Textures/Munchie.tga", true);
+	collectables[MUNCHIECOUNT]->_munchieInvertedTexture = new Texture2D();
+	collectables[MUNCHIECOUNT]->_munchieInvertedTexture->Load("Textures/MunchieInverted.tga", true);
+	collectables[MUNCHIECOUNT]->_munchieRect = new Rect(100.0f, 450.0f, 12, 12);*/
 
 	// Set string position
 	_stringPosition = new Vector2(10.0f, 25.0f);
@@ -102,16 +98,32 @@ void Pacman::Update(int elapsedTime)
 	// Gets the current state of the keyboard
 	Input::KeyboardState* keyboardState = Input::Keyboard::GetState();
 
+	if (_Pacman->currentframetime > _Pacman->player_frame_time) 
+	{
+		_Pacman->frame++;
+
+		if (_Pacman->frame >= 2)
+			_Pacman->frame = 0;
+
+		_Pacman->currentframetime = 0;
+	}
+
+	_Pacman->sourcerect->Y = _Pacman->sourcerect->Height * _Pacman->player_direction;
+	_Pacman->sourcerect->X = _Pacman->sourcerect->Width * _Pacman->frame;
+
+
+	collectables->currentframetime += elapsedTime;
+
 
 	/*int i;
 	for (i = 0; i < MUNCHIECOUNT; i++)
 	{
-		collectables[i] = new collectable();
-		collectables[i]->currentframetime = 0;
+		collectables[MUNCHIECOUNT] = new collectable();
+		collectables[MUNCHIECOUNT]->currentframetime = 0;
 	}*/
 	/*for (int i = 0; i < MUNCHIECOUNT; i++) 
 	{
-		Updatecollectable;  (collectables[i], elapsedTime);
+		Updatecollectable;  (collectables[MUNCHIECOUNT], elapsedTime);
 	}*/
 
 	if (keyboardState->IsKeyDown(Input::Keys::P))
@@ -123,8 +135,7 @@ void Pacman::Update(int elapsedTime)
 	{
 	
 		// Checks if D key is pressed
-		if (keyboardState->IsKeyDown(Input::Keys::D))
-			_Pacman->position->X += _Pacman->_cpacmanSpeed * elapsedTime;
+		
 
 		if (_Pacman->position->X > Graphics::GetViewportWidth())
 		{
@@ -140,21 +151,24 @@ void Pacman::Update(int elapsedTime)
 	// Checks if D key is pressed
 	if (keyboardState->IsKeyDown(Input::Keys::D)) {
 		_Pacman->position->X += _Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
-		player_direction = 1
+		_Pacman->player_direction = 0;
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::A)) {
 
 		_Pacman->position->X += -_Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
+		_Pacman->player_direction = 2;
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::W)) {
 
 		_Pacman->position->Y += -_Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
+		_Pacman->player_direction = 3;
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::S)) {
 		_Pacman->position->Y += _Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
+		_Pacman->player_direction = 1;
 
 	}
 
@@ -190,8 +204,8 @@ void Pacman::Draw(int elapsedTime)
 
 	/*for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
-		collectables[i] = new collectable();
-		collectables[i]->currentframetime = 0;
+		collectables[MUNCHIECOUNT] = new collectable();
+		collectables[MUNCHIECOUNT]->currentframetime = 0;
 	}*/
 
 	SpriteBatch::BeginDraw(); // Starts Drawing

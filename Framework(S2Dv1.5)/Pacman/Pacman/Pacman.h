@@ -18,27 +18,30 @@ using namespace S2D;
 
 struct player 
 {
-	float speedmultiplier;
+	int player_frame;
 	int currentframetime;
+	float speedmultiplier;
 	int  player_direction;
 	int frame;
 	Rect* sourcerect;
 	Texture2D* texture;
 	Vector2* position;
 	const float _cpacmanSpeed;
-	player() : _cpacmanSpeed(0.1f)
+	const int player_frame_time;
+	player() : player_frame_time(250), _cpacmanSpeed(0.1f)
 	{};
 };
 
 struct collectable
 {
 	Vector2* position;
-	int currentframetime;
+	int munchieframe;
+	int munchiecurrentframetime;
 	int _frameCount;
 	Rect* _munchieRect;
 	Texture2D* _munchieBlueTexture;
 	Texture2D* _munchieInvertedTexture;
-	Texture2D* collectabletex;
+	int currentframetime;
 };
 
 struct menu
