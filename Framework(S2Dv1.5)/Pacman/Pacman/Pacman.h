@@ -20,17 +20,17 @@ struct player
 {
 	float speedmultiplier;
 	int currentframetime;
-	int direction;
+	int  player_direction;
 	int frame;
 	Rect* sourcerect;
 	Texture2D* texture;
 	Vector2* position;
 	const float _cpacmanSpeed;
-	player() : _cpacmanSpeed(1.00f)
+	player() : _cpacmanSpeed(0.1f)
 	{};
 };
 
-struct munchie
+struct collectable
 {
 	Vector2* position;
 	int currentframetime;
@@ -59,7 +59,7 @@ private:
 	player* _Pacman;
 
 	// Data to represent Munchie
-	munchie* collectable[MUNCHIECOUNT];
+	collectable* collectables[MUNCHIECOUNT];
 	// Position for String
 	Vector2* _stringPosition;
 
