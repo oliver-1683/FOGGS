@@ -38,10 +38,15 @@ struct collectable
 	int munchieframe;
 	int munchiecurrentframetime;
 	int _frameCount;
+
 	Rect* _munchieRect;
+	//
 	Texture2D* _munchieBlueTexture;
 	Texture2D* _munchieInvertedTexture;
 	int currentframetime;
+	const int Ccollectableframetime;
+	collectable() : Ccollectableframetime(500)
+	{};
 };
 
 struct menu
@@ -86,4 +91,6 @@ public:
 
 	/// <summary> Called every frame - draw game here. </summary>
 	void virtual Draw(int elapsedTime);
+
+	bool collisioncheck(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
 };
