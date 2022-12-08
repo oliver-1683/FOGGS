@@ -7,6 +7,14 @@
 Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
 {
 	_Pacman = new player();
+	_Pacman->dead = false;
+	_Pacman->player_direction = 0;
+	start_menu->_paused = false;
+
+	_ghosts = new movingenemy();
+	_ghosts->direction = 0;
+	_ghosts->speed = 0.2f;
+
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
 		collectables[i] = new collectable();
@@ -24,6 +32,9 @@ Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
 	collectables[i]->munchiecurrentframetime = 0;
 
 	}
+
+	
+
 
 
 	//initonalise inportant game aspects
@@ -57,6 +68,12 @@ void Pacman::LoadContent()
 	_Pacman->position = new Vector2(350.0f, 350.0f);
 	_Pacman->sourcerect = new Rect(0.0f, 0.0f, 32, 32);
 
+	_ghosts->texture = new Texture2D();
+	_ghosts->texture->Load("Texture / GhostBlue.png", false);
+	_ghosts->position = new Vector2((rand() % Graphics::GetViewportWidth()), (rand() % Graphics::GetViewportHeight()));
+	_ghosts->souceRect = new Rect(0.0f, 0.0f, 20, 20);
+
+
 	
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
@@ -72,22 +89,13 @@ void Pacman::LoadContent()
 		collectables[i]->_munchieBlueTexture = new Texture2D();
 		collectables[i]->_munchieBlueTexture = collectabletex;
 		
-		//collectables[i]->_munchieBlueTexture->Load("Textures/Munchie.tga", true);
-
-		// crate a munchie sprite sheet 12 by 12  pixils for eash sprite
-		//collectables[i]->_munchieInvertedTexture = new Texture2D();
+		
 		
 		collectables[i]->_munchieRect = new Rect(0.0f, 0.0f, 12, 12);
 	}
 
 
-	// Load Munchie
-	/*collectables[MUNCHIECOUNT]->_munchieBlueTexture = new Texture2D();
-	collectables[MUNCHIECOUNT]->_munchieBlueTexture->Load("Textures/Munchie.tga", true);
-	collectables[MUNCHIECOUNT]->_munchieInvertedTexture = new Texture2D();
-	collectables[MUNCHIECOUNT]->_munchieInvertedTexture->Load("Textures/MunchieInverted.tga", true);
-	collectables[MUNCHIECOUNT]->_munchieRect = new Rect(100.0f, 450.0f, 12, 12);*/
-
+	
 	// Set string position
 	_stringPosition = new Vector2(10.0f, 25.0f);
 
@@ -104,6 +112,14 @@ void Pacman::Update(int elapsedTime)
 {
 	// Gets the current state of the keyboard
 	Input::KeyboardState* keyboardState = Input::Keyboard::GetState();
+	Input::MouseState* mouseState = Input::Mouse::GetState();
+
+	if (!start_menu->_paused)
+	{
+		Input(elapsedTime, keyboardState, mouseState, Input::Keys::R);
+		UpdatePacman(elapsedTime);
+		updateghosts(_ghosts, elapsedTime);
+	}
 
 	_Pacman->currentframetime += elapsedTime;
 
@@ -219,6 +235,34 @@ void Pacman::Update(int elapsedTime)
 	
 }
 
+void Pacman::ceckghostcollisions()
+{
+	int i = 0;
+	int bottom1 = _Pacman->position->Y + _Pacman->sourcerect->Height;
+	int bottom2 = 0;
+
+
+};
+void Pacman::updateghosts(movingenemy* ghost, int elapsedTime)
+{
+	if (ghost->direction == 0) 
+	{
+		ghost->position->X += ghost->speed * elapsedTime;
+	}
+	else if (ghost->direction == 1) 
+	{
+		ghost->position->X -= ghost->speed * elapsedTime;
+	}
+	if (ghost->position->X + ghost->souceRect->Width >= Graphics::GetViewportWidth()) 
+	{
+		ghost->direction = 1;
+	}
+	else if (ghost->position->X <= 0) 
+	{
+		ghost->direction = 0;
+	}
+};
+
 void Pacman::Draw(int elapsedTime)
 {
 	// Allows us to easily create a string
@@ -226,39 +270,18 @@ void Pacman::Draw(int elapsedTime)
 	stream << "Pacman X: " << _Pacman->position->X << " Y: " << _Pacman->position->Y;
 
 
-	/*for (int i = 0; i < MUNCHIECOUNT; i++)
-	{
-		collectables[MUNCHIECOUNT] = new collectable();
-		collectables[MUNCHIECOUNT]->currentframetime = 0;
-	}*/
+	
 
 	SpriteBatch::BeginDraw(); // Starts Drawing
-	SpriteBatch::Draw(_Pacman->texture, _Pacman->position, _Pacman->sourcerect);
+	//SpriteBatch::Draw(_Pacman->texture, _Pacman->position, _Pacman->sourcerect);
+	if (!_Pacman->dead) 
+	{
+		SpriteBatch::Draw(_Pacman->texture, _Pacman->position, _Pacman->sourcerect);
+	}
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
 		SpriteBatch::Draw(collectables[i]->_munchieBlueTexture, collectables[i]->position, collectables[i]->_munchieRect);// Draws Pacman
 	}
-	
-	//	if (collectables[i]->_frameCount < 30)
-	//	{
-	//		// Draws Red Munchie
-	//		SpriteBatch::Draw(collectables[i]->_munchieInvertedTexture, collectables[i]->_munchieRect, nullptr, Vector2::Zero, 1.0f, 0.0f, Color::White, SpriteEffect::NONE);
-
-	//		collectables[i]->_frameCount++;
-	//	}
-	//	else
-	//	{
-	//		// Draw Blue Munchie
-	//		SpriteBatch::Draw(collectables[i]->_munchieBlueTexture, collectables[i]->_munchieRect, nullptr, Vector2::Zero, 1.0f, 0.0f, Color::White, SpriteEffect::NONE);
-
-	//		collectables[i]->_frameCount++;
-
-	//		if (collectables[i]->_frameCount >= 60)
-	//			collectables[i]->_frameCount = 0;
-
-
-	//	}
-	//}
 	
 	// Draws String
 	SpriteBatch::DrawString(stream.str().c_str(), _stringPosition, Color::Green);

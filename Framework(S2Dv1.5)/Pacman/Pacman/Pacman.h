@@ -8,6 +8,8 @@
 	#endif
 #endif
 #define MUNCHIECOUNT 50
+#define GHOSTCOUNT 1
+
 
 
 // Just need to include main header file
@@ -16,8 +18,19 @@
 // Reduces the amount of typing by including all classes in S2D namespace
 using namespace S2D;
 
+struct movingenemy 
+{
+	Vector2* position;
+	Texture2D* texture;
+	Rect* souceRect;
+	int direction;
+	float speed;
+};
+
+
 struct player 
 {
+	bool dead;
 	int player_frame;
 	int currentframetime;
 	float speedmultiplier;
@@ -40,7 +53,7 @@ struct collectable
 	int _frameCount;
 
 	Rect* _munchieRect;
-	//
+	
 	Texture2D* _munchieBlueTexture;
 	Texture2D* _munchieInvertedTexture;
 	int currentframetime;
@@ -62,7 +75,16 @@ struct menu
 // load content, draw and update our game.
 class Pacman : public Game
 {
+
+
+
 private:
+	/*player _Pacman;
+	collectable collectables[MUNCHIECOUNT]; 
+	movingenemy* enemy[GHOSTCOUNT]*/;
+	void ceckghostcollisions();
+	void updateghosts(movingenemy*, int elapsedTime);
+
 	// Data to represent Pacman
 	player* _Pacman;
 
@@ -71,10 +93,12 @@ private:
 	// Position for String
 	Vector2* _stringPosition;
 
-	
+	movingenemy* _ghosts;
 
 	//data for menu
 	menu* start_menu;
+
+
 
 public:
 	/// <summary> Constructs the Pacman class. </summary>
@@ -93,4 +117,6 @@ public:
 	void virtual Draw(int elapsedTime);
 
 	bool collisioncheck(int x1, int y1, int width1, int height1, int x2, int y2, int width2, int height2);
+
+	void Input(elapsedTime, keyboardState, mouseState, Input::Keys::R);
 };
