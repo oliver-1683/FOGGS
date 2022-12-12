@@ -9,7 +9,7 @@ Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
 	_Pacman = new player();
 	_Pacman->dead = false;
 	_Pacman->player_direction = 0;
-	start_menu->_paused = false;
+	//start_menu->_paused = false;
 
 	_ghosts = new movingenemy();
 	_ghosts->direction = 0;
@@ -64,7 +64,7 @@ void Pacman::LoadContent()
 {
 	// Load Pacman
 	_Pacman->texture = new Texture2D();
-	_Pacman->texture->Load("Textures/Pacman.tga", false);
+	_Pacman->texture->Load("Textures/player.psd", false);
 	_Pacman->position = new Vector2(350.0f, 350.0f);
 	_Pacman->sourcerect = new Rect(0.0f, 0.0f, 32, 32);
 
@@ -82,7 +82,7 @@ void Pacman::LoadContent()
 	}
 
 	Texture2D* collectabletex = new Texture2D();
-	collectabletex->Load("Textures/Munchie.png", false);
+	collectabletex->Load("Textures/collectable.psd", false);
 
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
@@ -116,8 +116,8 @@ void Pacman::Update(int elapsedTime)
 
 	if (!start_menu->_paused)
 	{
-		Input(elapsedTime, keyboardState, mouseState, Input::Keys::R);
-		UpdatePacman(elapsedTime);
+		//Input(elapsedTime, keyboardState, mouseState, Input::Keys::R);
+		//UpdatePacman(elapsedTime);
 		updateghosts(_ghosts, elapsedTime);
 	}
 
@@ -180,13 +180,13 @@ void Pacman::Update(int elapsedTime)
 	// Checks if D key is pressed
 	if (keyboardState->IsKeyDown(Input::Keys::D)) {
 		_Pacman->position->X += _Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
-		_Pacman->player_direction = 0;
+		_Pacman->player_direction = 2;
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::A)) {
 
 		_Pacman->position->X += -_Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
-		_Pacman->player_direction = 2;
+		_Pacman->player_direction = 1;
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::W)) {
@@ -197,7 +197,7 @@ void Pacman::Update(int elapsedTime)
 
 	if (keyboardState->IsKeyDown(Input::Keys::S)) {
 		_Pacman->position->Y += _Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
-		_Pacman->player_direction = 1;
+		_Pacman->player_direction = 0;
 
 	}
 
