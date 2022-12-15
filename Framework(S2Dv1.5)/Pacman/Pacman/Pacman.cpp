@@ -20,6 +20,8 @@ Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
 		collectables[i] = new collectable();
 		collectables[i]->currentframetime = 0;
 		collectables[i]->_frameCount = 0;
+		collectables[i]->munchiecurrentframetime = 0;
+		collectables[i]->munchieframe = 0;
 	}
 	//local veriable
 	start_menu = new menu();
@@ -27,13 +29,6 @@ Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
 	
 	_Pacman->currentframetime = 0;
 	_Pacman->frame = 0;
-	for (int i = 0; i < MUNCHIECOUNT; i++)
-	{
-	collectables[i]->munchiecurrentframetime = 0;
-
-	}
-
-	
 
 
 
@@ -64,34 +59,23 @@ void Pacman::LoadContent()
 {
 	// Load Pacman
 	_Pacman->texture = new Texture2D();
-	_Pacman->texture->Load("Textures/player.psd", false);
+	_Pacman->texture->Load("Textures/player.png", false);
 	_Pacman->position = new Vector2(350.0f, 350.0f);
-	_Pacman->sourcerect = new Rect(0.0f, 0.0f, 32, 32);
+	_Pacman->sourcerect = new Rect(0.0f, 0.0f, 12, 23);
 
 	_ghosts->texture = new Texture2D();
-	_ghosts->texture->Load("Texture / GhostBlue.png", false);
+	_ghosts->texture->Load("Textures/GhostBlue.png", false);
 	_ghosts->position = new Vector2((rand() % Graphics::GetViewportWidth()), (rand() % Graphics::GetViewportHeight()));
 	_ghosts->souceRect = new Rect(0.0f, 0.0f, 20, 20);
 
-
-	
-	for (int i = 0; i < MUNCHIECOUNT; i++)
-	{
-		collectables[i]->currentframetime = 0;
-		collectables[i]->position = new Vector2((rand() % Graphics::GetViewportWidth()), (rand() % Graphics::GetViewportHeight()));
-	}
-
 	Texture2D* collectabletex = new Texture2D();
-	collectabletex->Load("Textures/collectable.psd", false);
+	collectabletex->Load("Textures/collectable.png", false);
 
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
-		collectables[i]->_munchieBlueTexture = new Texture2D();
-		collectables[i]->_munchieBlueTexture = collectabletex;
-		
-		
-		
-		collectables[i]->_munchieRect = new Rect(0.0f, 0.0f, 12, 12);
+		collectables[i]->_munchieBlueTexture = collectabletex;	
+		collectables[i]->_munchieRect = new Rect(0.0f, 0.0f, 12, 24);
+		collectables[i]->position = new Vector2((rand() % Graphics::GetViewportWidth()), (rand() % Graphics::GetViewportHeight()));
 	}
 
 
@@ -137,23 +121,30 @@ void Pacman::Update(int elapsedTime)
 	_Pacman->sourcerect->Y = _Pacman->sourcerect->Height * _Pacman->player_direction;
 	_Pacman->sourcerect->X = _Pacman->sourcerect->Width * _Pacman->frame;
 
+
+	for (int i = 0; i < MUNCHIECOUNT; i++)
+	{
+
+		if (collectables[i]->currentframetime > collectables[i]->Ccollectableframetime)
+		{
+			collectables[i]->_frameCount++;
+
+			if (collectables[i]->_frameCount >= 2)
+				collectables[i]->_frameCount = 0;
+
+			collectables[i]->currentframetime = 0;
+		}
+		collectables[i]->_munchieRect->X = collectables[i]->_munchieRect->Width * collectables[i]->_frameCount;
+
+	}
+
+	
+
+
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 		collectables[i]->_munchieRect->X = collectables[i]->_munchieRect->Width * collectables[i]->_frameCount;
 
 	
-	
-
-
-	/*int i;
-	for (i = 0; i < MUNCHIECOUNT; i++)
-	{
-		collectables[MUNCHIECOUNT] = new collectable();
-		collectables[MUNCHIECOUNT]->currentframetime = 0;
-	}*/
-	/*for (int i = 0; i < MUNCHIECOUNT; i++) 
-	{
-		Updatecollectable;  (collectables[MUNCHIECOUNT], elapsedTime);
-	}*/
 
 	if (keyboardState->IsKeyDown(Input::Keys::P))
 	{
@@ -199,6 +190,10 @@ void Pacman::Update(int elapsedTime)
 		_Pacman->position->Y += _Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
 		_Pacman->player_direction = 0;
 
+	}
+	if (keyboardState->IsKeyDown(Input::Keys::F))
+	{
+		_Pacman->_cpacmanSpeed = 0.75f;
 	}
 
 

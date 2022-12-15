@@ -10,19 +10,33 @@ C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.32.3
               _Ty=S2D::Input::Keys
           ]
 C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\S2D\Input.h(108): message : see reference to class template instantiation 'std::vector<S2D::Input::Keys,std::allocator<S2D::Input::Keys>>' being compiled
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(73,83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(73,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(81,92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(81,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(137,55): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(138,54): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(141,75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(172,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(212,55): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(223,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(228,178): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(228,148): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(228,61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(228,39): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(241,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(68,83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(68,42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(78,92): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(78,51): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(121,55): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(122,54): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(137,75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(145,75): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(163,27): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(207,55): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(218,56): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(223,178): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(223,148): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(223,61): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(223,39): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\Pacman.cpp(236,14): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  main.cpp
+C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.32.31326\include\vector(2045,41): warning C4251: 'std::vector<S2D::Input::Keys,std::allocator<S2D::Input::Keys>>::_Mypair': class 'std::_Compressed_pair<std::allocator<S2D::Input::Keys>,std::_Vector_val<std::_Simple_types<_Ty>>,true>' needs to have dll-interface to be used by clients of class 'std::vector<S2D::Input::Keys,std::allocator<S2D::Input::Keys>>'
+          with
+          [
+              _Ty=S2D::Input::Keys
+          ]
+C:\Program Files\Microsoft Visual Studio\2022\Professional\VC\Tools\MSVC\14.32.31326\include\vector(2045): message : see declaration of 'std::_Compressed_pair<std::allocator<S2D::Input::Keys>,std::_Vector_val<std::_Simple_types<_Ty>>,true>'
+          with
+          [
+              _Ty=S2D::Input::Keys
+          ]
+C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Pacman\S2D\Input.h(108): message : see reference to class template instantiation 'std::vector<S2D::Input::Keys,std::allocator<S2D::Input::Keys>>' being compiled
+  Generating Code...
   Pacman.vcxproj -> C:\Users\h021185l\Documents\GitHub\FOGGS\Framework(S2Dv1.5)\Pacman\Debug\Pacman.exe

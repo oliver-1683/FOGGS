@@ -39,9 +39,9 @@ struct player
 	Rect* sourcerect;
 	Texture2D* texture;
 	Vector2* position;
-	const float _cpacmanSpeed;
+	 float _cpacmanSpeed = 0.50f;
 	const int player_frame_time;
-	player() : player_frame_time(250), _cpacmanSpeed(0.1f)
+	player() : player_frame_time(250)
 	{};
 };
 
@@ -50,12 +50,9 @@ struct collectable
 	Vector2* position;
 	int munchieframe;
 	int munchiecurrentframetime;
-	int _frameCount;
-
 	Rect* _munchieRect;
-	
 	Texture2D* _munchieBlueTexture;
-	Texture2D* _munchieInvertedTexture;
+	int _frameCount;
 	int currentframetime;
 	const int Ccollectableframetime;
 	collectable() : Ccollectableframetime(500)
