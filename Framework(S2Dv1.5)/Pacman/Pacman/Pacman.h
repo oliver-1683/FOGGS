@@ -39,7 +39,7 @@ struct player
 	Rect* sourcerect;
 	Texture2D* texture;
 	Vector2* position;
-	 float _cpacmanSpeed = 0.50f;
+	 float _cpacmanSpeed = 0.30f;
 	const int player_frame_time;
 	player() : player_frame_time(250)
 	{};
@@ -59,6 +59,7 @@ struct collectable
 	{};
 };
 
+
 struct menu
 {
 	Texture2D* _menuBackround;
@@ -67,6 +68,8 @@ struct menu
 	bool _paused;
 
 };
+
+
 // Declares the Pacman class which inherits from the Game class.
 // This allows us to overload the Game class methods to help us
 // load content, draw and update our game.
@@ -76,25 +79,23 @@ class Pacman : public Game
 
 
 private:
-	/*player _Pacman;
-	collectable collectables[MUNCHIECOUNT]; 
-	movingenemy* enemy[GHOSTCOUNT]*/;
-	void ceckghostcollisions();
-	void updateghosts(movingenemy*, int elapsedTime);
+
+	movingenemy* ghost[GHOSTCOUNT];
 
 	// Data to represent Pacman
 	player* _Pacman;
-
+	player _pacman;
+	SoundEffect* _pop;
 	// Data to represent Munchie
 	collectable* collectables[MUNCHIECOUNT];
 	// Position for String
 	Vector2* _stringPosition;
 
-	movingenemy* _ghosts;
-
 	//data for menu
 	menu* start_menu;
 
+	void ceckghostcollisions();
+	void updateghosts(movingenemy*, int elapsedTime);
 
 
 public:
