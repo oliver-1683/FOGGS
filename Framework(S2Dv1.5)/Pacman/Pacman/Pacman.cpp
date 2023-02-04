@@ -18,6 +18,10 @@ Pacman::Pacman(int argc, char* argv[]) : Game(argc, argv)
 	}
 
 	_pop = new SoundEffect();
+	_coin = new SoundEffect();
+	_ghost = new SoundEffect();
+	_run = new SoundEffect();
+	_pause = new SoundEffect();
 
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
@@ -50,6 +54,10 @@ Pacman::~Pacman()
 	delete _Pacman->texture;
 	delete _Pacman->sourcerect;
 	delete _pop;
+	delete _coin;
+	delete _ghost;
+	delete _run;
+	delete _pause;
 
 	int ncount = 0;
 	/*for (ncount = 0; ncount < MUNCHIECOUNT; ncount++)
@@ -66,6 +74,10 @@ void Pacman::LoadContent()
 
 	//load sound effect
 	_pop->Load("soundeffects/pop.wav");
+	_coin->Load("soundeffects/coin.wav");
+	_ghost->Load("soundeffects/ghost.wav"); 
+	_run->Load("soundeffects/run.wav");
+	_pause->Load("soundeffects/pause.wav");
 	// Load Pacman
 	_Pacman->texture = new Texture2D();
 	_Pacman->texture->Load("Textures/player.png", false);
@@ -160,6 +172,7 @@ void Pacman::Update(int elapsedTime)
 	if (keyboardState->IsKeyDown(Input::Keys::P))
 	{
 		start_menu->_paused = !start_menu->_paused;
+		Audio::Play(_pause);
 	}
 
 	if ( !start_menu->_paused)
@@ -183,21 +196,25 @@ void Pacman::Update(int elapsedTime)
 	if (keyboardState->IsKeyDown(Input::Keys::D)) {
 		_Pacman->position->X += _Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
 		_Pacman->player_direction = 2;
+		Audio::Play(_run);
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::A)) {
 
 		_Pacman->position->X += -_Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across X axis
 		_Pacman->player_direction = 1;
+		Audio::Play(_run);
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::W)) {
 
 		_Pacman->position->Y += -_Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
 		_Pacman->player_direction = 3;
+		Audio::Play(_run);
 	}
 
 	if (keyboardState->IsKeyDown(Input::Keys::S)) {
+		Audio::Play(_run);
 		_Pacman->position->Y += _Pacman->_cpacmanSpeed * elapsedTime; //Moves Pacman across Y axis
 		_Pacman->player_direction = 0;
 
@@ -205,6 +222,7 @@ void Pacman::Update(int elapsedTime)
 	if (keyboardState->IsKeyDown(Input::Keys::F))
 	{
 		_Pacman->_cpacmanSpeed = 0.75f;
+		Audio::Play(_run);
 	}
 
 
@@ -231,12 +249,14 @@ void Pacman::Update(int elapsedTime)
 	{
 		_Pacman->position->Y = Graphics::GetViewportHeight() - _Pacman->sourcerect->Height;
 		Audio::Play(_pop);
+		
 	} 
 
 	for (int i = 0; i < MUNCHIECOUNT; i++)
 	{
 		if (collisioncheck(_Pacman->position->X, _Pacman->position->Y, _Pacman->sourcerect->Width, _Pacman->sourcerect->Height, collectables[i]->position->X, collectables[i]->position->Y, collectables[i]->_munchieRect->Width, collectables[i]->_munchieRect->Height))
 		{
+			Audio::Play(_coin);
 			collectables[i]->position->X = -100, -100;
 			collectables[i]->position->Y = -100, -100;
 		}
@@ -262,11 +282,12 @@ void Pacman::ceckghostcollisions()
 		left2 = ghost[i]->position->X;
 		right2 = ghost[i]->position->X + ghost[i]->souceRect->Width;
 		top2 = ghost[i]->position->Y;
-		if ((bottom1 > top2) && (right1 > left2) && (left1 < right2));
-	}
-	{
-		_Pacman->dead = true;
-		i = GHOSTCOUNT;
+		if ((bottom1 > top2) && (right1 > left2) && (left1 < right2)) 
+		{
+			_Pacman->dead = true;
+			Audio::Play(_ghost);
+			i = GHOSTCOUNT;
+		};
 	}
 
 
@@ -284,10 +305,12 @@ void Pacman::updateghosts(movingenemy* ghost, int elapsedTime)
 	if (ghost->position->X + ghost->souceRect->Width >= Graphics::GetViewportWidth()) //hits right edge
 	{
 		ghost->direction = 1;
+		
 	}
 	else if (ghost->position->X <= 0) //hits left edge
 	{
-		ghost->direction = 0; // change direction 
+		ghost->direction = 0;// change direction 
+		Audio::Play(_ghost);
 	}
 };
 

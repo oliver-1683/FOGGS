@@ -86,6 +86,10 @@ private:
 	player* _Pacman;
 	player _pacman;
 	SoundEffect* _pop;
+	SoundEffect* _coin;
+	SoundEffect* _ghost;
+	SoundEffect* _run;
+	SoundEffect* _pause;
 	// Data to represent Munchie
 	collectable* collectables[MUNCHIECOUNT];
 	// Position for String
